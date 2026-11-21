@@ -1,0 +1,10 @@
+*.o
+build/bin/
+build/objects/
+NRL-Server.tar.gz
+*.tar.gz
+*.deb
+*.swp
+*.swo
+.DS_Store
+*.log
