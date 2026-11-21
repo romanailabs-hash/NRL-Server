@@ -1,0 +1,35 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y gcc make
+    
+    - name: Build
+      run: make -j$(nproc)
+    
+    - name: Quick smoke test
+      run: |
+        ./build/bin/nrl-serverd --port 17999 --sublattices 64 --lattice-width 16 &
+        sleep 1
+        curl -sf http://127.0.0.1:17999/health && echo " [PASS] /health"
+        curl -sf -X POST -H 'Content-Type: application/json' \
+          -d '{"steps":100,"input_seed":42}' \
+          http://127.0.0.1:17999/v1/tick && echo " [PASS] /v1/tick"
+        curl -sf http://127.0.0.1:17999/v1/stats && echo " [PASS] /v1/stats"
+        kill %1 2>/dev/null || true
+    
+    - name: Verify binary sizes
+      run: |
+        ls -lh build/bin/nrl-serverd
+        ls -lh build/bin/nrlctl

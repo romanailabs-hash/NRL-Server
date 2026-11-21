@@ -1,0 +1,24 @@
+# NRL-Server .gitignore
+
+# Build artifacts
+build/bin/
+build/objects/
+build/rootfs/
+*.o
+*.swp
+*.swo
+
+# State files
+*.nrlstate
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/tmp/

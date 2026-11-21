@@ -1,0 +1,20 @@
+# NRL-Server v1 Configuration
+# Copy to nrl-server.conf and adjust as needed
+
+[server]
+bind = 127.0.0.1
+port = 8080
+token = change-me-to-a-random-secret
+
+[nrl]
+seed = 42
+sublattices = 1024
+lattice_width = 64
+state_file = /tmp/nrl-server.state
+
+[sandbox]
+rootfs_dir = build/rootfs
+default_timeout_ms = 30000
+default_mem_mb = 256
+default_cpu_quota_pct = 50
+default_pids_max = 64
